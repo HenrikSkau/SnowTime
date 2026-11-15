@@ -16,7 +16,7 @@
 :root{
   --bg:#ffffff;--card:#ffffff;--card2:#f1f7fd;--line:#e2ebf4;--txt:#13283d;--mut:#5b6d80;--dim:#9aabbd;
   --acc:#3a9ff0;--acc2:#e6f3fe;--accd:#1673c6;--live:#e5484d;
-  --lr:#2bb673;--ss:#f39a3a;--al:#3a9ff0;--hp:#9a6cf0;--kb:#1fb3b8;--sk:#5c7cfa;--sc:#d6457e;
+  --lr:#2bb673;--ss:#f39a3a;--al:#3a9ff0;--hp:#9a6cf0;--kb:#1fb3b8;--sc:#d6457e;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif}
@@ -187,7 +187,6 @@ const SPORT={
   al:{n:'Alpint',c:'var(--al)',a:'AL',res:'https://www.fis-ski.com/DB/alpine-skiing/calendar-results.html'},
   hp:{n:'Hopp',c:'var(--hp)',a:'HO',res:'https://www.fis-ski.com/DB/ski-jumping/calendar-results.html'},
   kb:{n:'Kombinert',c:'var(--kb)',a:'KO',res:'https://www.fis-ski.com/DB/nordic-combined/calendar-results.html'},
-  sk:{n:'Skøyter',c:'var(--sk)',a:'SK',res:'https://www.isu.org'},
   sc:{n:'Langløp',c:'var(--sc)',a:'LL',res:'https://skiclassics.com/events/'}
 };
 const CH={'SC Play':{u:'https://skiclassics.com',d:'SC Play (strømming)'},'NRK':{u:'https://tv.nrk.no',d:'NRK1 / NRK TV'},'TV 2':{u:'https://play.tv2.no',d:'TV 2 Direkte / TV 2 Play'},'Viaplay':{u:'https://viaplay.no',d:'Viaplay'}};
@@ -306,14 +305,6 @@ const STAGES=[
 ['kb-vm','kb','Falun','SWE','02-25','03-06','TV 2','VM','Radiokanalen NRK Sport sender VM i kombinert.'],
 ['kb-osl','kb','Oslo – Holmenkollen','NOR','03-12','03-13','NRK','Finale'],
 
-['sk-wc1','sk','Verdenscup','','11-13','11-15','Viaplay','','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
-['sk-wc2','sk','Verdenscup','','11-20','11-22','Viaplay','','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
-['sk-wc3','sk','Verdenscup','','12-04','12-06','Viaplay','','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
-['sk-wc4','sk','Verdenscup','','12-11','12-13','Viaplay','','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
-['sk-em','sk','EM','','01-08','01-10','Viaplay','EM','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
-['sk-wc5','sk','Verdenscup','','01-30','01-31','Viaplay','','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
-['sk-wc6','sk','Verdenscup','','02-05','02-05','Viaplay','','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
-['sk-vm','sk','VM enkeltdistanser','','02-25','02-28','Viaplay','VM','NRK-oversikten oppgir ikke sted eller tider for skøyter.'],
 ['sc-bgp','sc','Bad Gastein Prologue','AUT','12-11','12-11','SC Play','','Bad Gastein. Alle renn strømmes live på SC Play med engelsk kommentar. NRK sendte Ski Classics forrige sesong, men det er ikke bekreftet for 2026/27.'],
 ['sc-sgc','sc','Sportgastein Criterium','AUT','12-13','12-13','SC Play','','Bad Gastein. Alle renn strømmes live på SC Play med engelsk kommentar. NRK sendte Ski Classics forrige sesong, men det er ikke bekreftet for 2026/27.'],
 ['sc-bgi','sc','Bad Gastein ITT','AUT','12-19','12-19','SC Play','','Bad Gastein. Alle renn strømmes live på SC Play med engelsk kommentar. NRK sendte Ski Classics forrige sesong, men det er ikke bekreftet for 2026/27.'],
@@ -497,7 +488,6 @@ const ICON={
  hp:'<circle cx="18" cy="6" r="2" fill="currentColor" stroke="none"/><path d="M16.5 8 9.5 13.5M12.5 11.5 15 14M4 18 20 9.5M5.5 20.5 21 14"/>',
  kb:'<path d="M3 5.5c5 0 7 2.5 9 7.5s4 6 9 6"/><circle cx="6" cy="3.5" r="1.6" fill="currentColor" stroke="none"/><path d="M3 21h18"/>',
  sc:'<circle cx="16.6" cy="4.4" r="2.1" fill="currentColor" stroke="none"/><path d="M14.8 7.3 11 12.6" stroke-width="3.6"/><path d="M14.9 7.5l4.8 2M11 12.6l2.6 3.4-.7 4.6M11 12.6l.3 3.8-1.6 4" stroke-width="2.3"/><path d="M19.6 9.5 15.6 20.6M18.2 9 13.9 20.4M4.5 21.3h17.6l.6-1" stroke-width="1.1"/>',
- sk:'<path d="M7 4h5v7l6 2a2.5 2.5 0 0 1 2 2.5V17H7z"/><path d="M5 20.5h15M9 17v3.5M17 17v3.5"/>'
 };
 const TVI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M9 2.5l3 3.5 3-3.5"/></svg>';
 /* ================= MODELL ================= */
@@ -518,6 +508,7 @@ const FIRST='2026-10-19',LAST='2027-04-04';
 const clampDate=s=>s<FIRST?FIRST:s>LAST?LAST:s;
 let S={v:'program',date:clampDate(TODAY),mode:'dag',sp:'all',g:'all',ch:'all',fav:{st:[],sp:[]},stSp:'all'};
 try{const sv=JSON.parse(localStorage.getItem('vp-state')||'null');if(sv){S.fav=sv.fav||S.fav;S.sp=sv.sp||'all';S.g=sv.g||'all';S.ch=sv.ch||'all';S.mode=sv.mode||'dag'}}catch(e){}
+if(!SPORT[S.sp])S.sp='all';S.fav.sp=S.fav.sp.filter(k=>SPORT[k]);
 const save=()=>{try{localStorage.setItem('vp-state',JSON.stringify({fav:S.fav,sp:S.sp,g:S.g,ch:S.ch,mode:S.mode}))}catch(e){}};
 
 /* ================= HJELPERE ================= */
@@ -549,7 +540,7 @@ const countdown=m=>m<60?`om ${Math.round(m)} min`:m<60*24?`om ${Math.floor(m/60)
 /* ================= SØK ================= */
 // Søkeindeksen er bygget som en liste med typer, slik at nye typer (f.eks. utøvere) kan legges til senere.
 const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/æ/g,'ae').replace(/ø/g,'o');
-const ALIAS={'VM':'vm verdensmesterskap mesterskap','EM':'em europamesterskap mesterskap','NM':'nm norgesmesterskap mesterskap','Tour de Ski':'tour de ski tds','Hoppuka':'hoppuka four hills','Finale':'finale verdenscupfinale grand finale','Grand Classics':'grand classics','Skiflyging':'skiflyging','Sesongstart':'sesongstart','Sesongåpning':'sesongapning sesongstart'};
+const ALIAS={'VM':'vm verdensmesterskap mesterskap','NM':'nm norgesmesterskap mesterskap','Tour de Ski':'tour de ski tds','Hoppuka':'hoppuka four hills','Finale':'finale verdenscupfinale grand finale','Grand Classics':'grand classics','Skiflyging':'skiflyging','Sesongstart':'sesongstart','Sesongåpning':'sesongapning sesongstart'};
 function stageHay(s){
   const wc=s.sp==='sc'?'ski classics world championship langlop langrenn':['VM','EM','NM'].includes(s.tag)||s.note.startsWith('Nasjonale')?'':'verdenscup world cup';
   const mo=parse(s.from).toLocaleDateString('nb-NO',{month:'long'});
@@ -657,7 +648,7 @@ function stageCard(s,races,dayISO){
   const head=`<button class="ch" data-s="${s.id}">${badge(s.sp)}<div class="t"><b>${flag(s.cc)} ${s.v}${tagH(s.tag)}</b><span>${[SPORT[s.sp].n,cn(s.cc),range(s.from,s.to)].filter(Boolean).join(' · ')}</span></div>${s.ch.includes('/')?'':tvB(s.ch)}</button>`;
   if(races.length)return `<div class="card">${head}${races.map(r=>raceRow(r)).join('')}</div>`;
   const wk=s.note.startsWith('Uke');
-  return `<div class="card">${head}<div class="banner">${wk?'📅 Renn denne uka. Eksakte dager er ikke lagt inn.':s.tag==='VM'?'🏆 Mesterskapet pågår. Dagsprogrammet er ikke lagt inn ennå.':(s.sp==='sk'?'⛸️ Sendes på Viaplay. Sted og tider er ikke oppgitt.':'📅 Pågår. Detaljert program er ikke lagt inn.')}</div></div>`;
+  return `<div class="card">${head}<div class="banner">${wk?'📅 Renn denne uka. Eksakte dager er ikke lagt inn.':s.tag==='VM'?'🏆 Mesterskapet pågår. Dagsprogrammet er ikke lagt inn ennå.':'📅 Pågår. Detaljert program er ikke lagt inn.'}</div></div>`;
 }
 function dayBlock(day){
   const races=RS.filter(r=>r.date===day&&inFilter(r));
@@ -718,7 +709,7 @@ function stageRow(s){
 
 const SER_ORDER=['Verdenscup','World Championship','Tour de Ski','Hoppuka','Grand Classics','VM','EM','NM','Sesongåpning'];
 const SER_DESC={'Verdenscup':'Hele verdenscupsesongen','World Championship':'Ski Classics sin sammenlagtserie','Tour de Ski':'Etapperennet i romjula og over nyttår','Hoppuka':'Fire bakker i Tyskland og Østerrike','Grand Classics':'De fire største langløpene','VM':'Verdensmesterskapet','EM':'Europamesterskapet','NM':'Norgesmesterskapet','Sesongåpning':'Nasjonale renn før verdenscupen'};
-const STAND={lr:'https://www.fis-ski.com/DB/cross-country/cup-standings.html',al:'https://www.fis-ski.com/DB/alpine-skiing/cup-standings.html',hp:'https://www.fis-ski.com/DB/ski-jumping/cup-standings.html',kb:'https://www.fis-ski.com/DB/nordic-combined/cup-standings.html',ss:'https://www.biathlonresults.com',sc:'https://skiclassics.com',sk:'https://www.isu.org'};
+const STAND={lr:'https://www.fis-ski.com/DB/cross-country/cup-standings.html',al:'https://www.fis-ski.com/DB/alpine-skiing/cup-standings.html',hp:'https://www.fis-ski.com/DB/ski-jumping/cup-standings.html',kb:'https://www.fis-ski.com/DB/nordic-combined/cup-standings.html',ss:'https://www.biathlonresults.com',sc:'https://skiclassics.com'};
 function seriesOf(s){
   if(s.tag==='VM')return['VM'];if(s.tag==='EM')return['EM'];if(s.tag==='NM')return['NM'];
   if(s.note.startsWith('Nasjonale'))return['Sesongåpning'];
@@ -850,10 +841,10 @@ function openStage(s){
 function info(){
   openSheet(`<h2>Om SnowTime</h2><div class="meta">Terminliste og TV-oversikt for sesongen 2026/27</div>
   <div class="card"><div class="banner" style="display:block;line-height:1.55">
-  <b style="color:var(--txt)">Hva er med:</b> Verdenscup, VM og NM i langrenn, skiskyting, alpint, hopp og kombinert, pluss skøyter og langløp (Ski Classics World Championship).<br><br>
+  <b style="color:var(--txt)">Hva er med:</b> Verdenscup, VM og NM i langrenn, skiskyting, alpint, hopp og kombinert, pluss langløp (Ski Classics World Championship).<br><br>
   <b style="color:var(--txt)">Tider og kanaler:</b> Hentet fra NRKs fulle sendeoversikt for vintersport 2026/27 (oppdatert 4. november). Alle tider er norsk tid og gjelder sendestart.<br><br>
   <b style="color:var(--txt)">To tider:</b> «Start» er når øvelsen starter. Sendestart vises som «TV fra» når kanalene har publisert den, som regel en til to uker før.<br><br>
-  <b style="color:var(--txt)">Kanaler:</b> NRK og TV 2 deler skiskyting. NRK sender alpint, langrenn, hopp og kombinert i Norge, alpint-VM og NM. TV 2 og Viaplay deler verdenscupen utenfor Norge, og TV 2 har ski-VM i Falun. Viaplay har skøyter. Ski Classics strømmes på SC Play. Radiokanalen NRK Sport sender alle renn i langrenn og skiskyting.<br><br>
+  <b style="color:var(--txt)">Kanaler:</b> NRK og TV 2 deler skiskyting. NRK sender alpint, langrenn, hopp og kombinert i Norge, alpint-VM og NM. TV 2 og Viaplay deler verdenscupen utenfor Norge, og TV 2 har ski-VM i Falun. Ski Classics strømmes på SC Play. Radiokanalen NRK Sport sender alle renn i langrenn og skiskyting.<br><br>
   <b style="color:var(--txt)">Forbehold:</b> Programmet kan endres. Sjekk alltid kanalens egen TV-guide.
   </div></div>
   <div class="small">Kilde: <a href="https://www.nrk.no/sport/program-for-vintersport-i-2026_2027_-full-oversikt-over-langrenn_-skiskyting_-alpint_-skoyter_-hopp-1.18033873" target="_blank" rel="noopener">NRK Sport: Program for vintersport i 2026/2027</a>. Supplert med FIS- og IBU-kalendere for sted og øvelse. Langløp: <a href="https://skiclassics.com/events/" target="_blank" rel="noopener">skiclassics.com/events</a>.</div>`);
