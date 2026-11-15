@@ -1,6 +1,6 @@
 {
-  "name": "Snowtime – vintersport på TV",
-  "short_name": "Snowtime",
+  "name": "SnowTime – vintersport på TV",
+  "short_name": "SnowTime",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
