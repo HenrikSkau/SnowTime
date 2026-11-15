@@ -121,6 +121,10 @@ mark{background:#d9eefe;color:inherit;border-radius:3px;padding:0 1px}
 .seg.wide{display:flex;margin-bottom:12px}
 .gseg button.on{background:var(--accd)}.seg.wide button{flex:1;padding:7px 10px;font-size:13.5px}
 .donebox{margin-top:16px}.donebox summary{font-size:13px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;padding:8px 4px;cursor:pointer}
+main.sl{animation:sl .22s ease-out}main.sr{animation:sr .22s ease-out}
+@keyframes sl{from{transform:translateX(36px);opacity:.25}to{transform:none;opacity:1}}
+@keyframes sr{from{transform:translateX(-36px);opacity:.25}to{transform:none;opacity:1}}
+main{touch-action:pan-y}
 nav.bottom{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 nav.bottom .in{max-width:640px;margin:0 auto;display:flex}
 nav.bottom button{flex:1;padding:9px 0 10px;font-size:11.5px;font-weight:600;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px}
@@ -886,6 +890,32 @@ document.querySelectorAll('nav.bottom button').forEach(b=>b.onclick=()=>{if(b.da
 $('todayBtn').onclick=()=>{S.date=clampDate(TODAY);S.mode='dag';render()};
 $('infoBtn').onclick=info;
 $('searchBtn').onclick=()=>{if(S.v!=='sok'){S.prev=S.v;S.v='sok';window.scrollTo(0,0);render()}};
+
+/* ================= SVEIP MELLOM DAGER ================= */
+function shiftDay(dir){
+  const d=parse(S.date);d.setDate(d.getDate()+(S.mode==='uke'?7:1)*dir);
+  const n=clampDate(toISO(d));if(n===S.date)return;
+  S.date=n;render();window.scrollTo(0,0);
+  const m=$('main');m.classList.remove('sl','sr');void m.offsetWidth;m.classList.add(dir>0?'sl':'sr');
+}
+(function(){
+  let x0=null,y0=0,t0=0;const m=$('main');
+  m.addEventListener('touchstart',e=>{
+    x0=null;
+    if(S.v!=='program'||$('sheet').classList.contains('open')||e.touches.length>1)return;
+    if(e.target.closest('.next,.chips,.days'))return;
+    const t=e.touches[0];x0=t.clientX;y0=t.clientY;t0=Date.now();
+  },{passive:true});
+  m.addEventListener('touchend',e=>{
+    if(x0===null)return;const t=e.changedTouches[0];const dx=t.clientX-x0,dy=t.clientY-y0;x0=null;
+    if(Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.6||Date.now()-t0>900)return;
+    shiftDay(dx<0?1:-1);
+  },{passive:true});
+  document.addEventListener('keydown',e=>{
+    if(S.v!=='program'||$('sheet').classList.contains('open')||/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+    if(e.key==='ArrowRight')shiftDay(1);else if(e.key==='ArrowLeft')shiftDay(-1);
+  });
+})();
 render();
 setInterval(()=>{if(S.v==='program'&&!$('sheet').classList.contains('open'))program()},60000);
 </script>
