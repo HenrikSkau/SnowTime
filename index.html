@@ -107,6 +107,20 @@ main{padding:12px}
 .hint{font-size:12.5px;color:var(--mut);padding:2px 4px 10px}
 input[type=search]::-webkit-search-cancel-button{display:none}
 mark{background:#d9eefe;color:inherit;border-radius:3px;padding:0 1px}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:left;display:flex;flex-direction:column;gap:3px;box-shadow:0 1px 3px rgba(19,40,61,.05)}
+.scard .badge{width:34px;height:34px;border-radius:10px;margin-bottom:6px}.scard .badge svg{width:22px;height:22px}
+.scard b{font-size:15.5px}.scard span{font-size:12px;color:var(--mut)}.scard em{font-style:normal;font-size:11.5px;color:var(--accd);font-weight:600;margin-top:4px}
+.backbar{margin:-2px 0 6px}.back{font-size:14px;font-weight:600;color:var(--accd);padding:6px 2px}
+.shead{display:flex;align-items:center;gap:12px;margin:2px 2px 14px}.shead h2{margin:0;font-size:21px}.shead .badge{width:40px;height:40px;border-radius:11px}.shead .badge svg{width:24px;height:24px}
+.sercard{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(19,40,61,.05)}
+.sertop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.sertop b{display:block;font-size:16px}.sertop span{font-size:12.5px;color:var(--mut)}
+.chev{font-size:24px;color:var(--dim);line-height:1}.sermeta{font-size:12.5px;color:var(--txt);margin-top:8px}.serch{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.pbar{height:6px;background:#edf2f7;border-radius:3px;margin-top:10px;overflow:hidden}.pbar i{display:block;height:100%;background:var(--acc);border-radius:3px}
+.ptxt{font-size:11.5px;color:var(--mut);margin-top:5px}
+.seg.wide{display:flex;margin-bottom:12px}
+.gseg button.on{background:var(--accd)}.seg.wide button{flex:1;padding:7px 10px;font-size:13.5px}
+.donebox{margin-top:16px}.donebox summary{font-size:13px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;padding:8px 4px;cursor:pointer}
 nav.bottom{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 nav.bottom .in{max-width:640px;margin:0 auto;display:flex}
 nav.bottom button{flex:1;padding:9px 0 10px;font-size:11.5px;font-weight:600;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:3px}
@@ -136,6 +150,7 @@ nav.bottom button.on svg{color:var(--acc)}
 .small a{color:var(--mut)}
 a{color:var(--accd)}
 .radio{font-size:10px;color:var(--dim);margin-top:3px;white-space:nowrap}
+.radio .tvt{color:var(--accd);font-weight:700}
 .kv{box-shadow:none}
 </style>
 </head>
@@ -157,7 +172,7 @@ a{color:var(--accd)}
 <nav class="bottom"><div class="in">
   <button data-v="program"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Program</button>
   <button data-v="steder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Arrangementer</button>
-  <button data-v="tv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M9 2l3 4 3-4"/></svg>TV-kanaler</button>
+  <button data-v="idretter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4"/></svg>Idretter</button>
   <button data-v="folger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>Følger</button>
 </div></nav>
 
@@ -277,7 +292,7 @@ const STAGES=[
 ['hp-osl','hp','Oslo – Holmenkollen','NOR','03-12','03-14','NRK',''],
 ['hp-pla','hp','Planica','SLO','03-18','03-21','Viaplay','Finale'],
 
-['kb-bei','kb','Beitostølen','NOR','11-22','11-22','NRK','Sesongstart'],
+['kb-bei','kb','Beitostølen','NOR','11-22','11-22','NRK','Sesongstart','Nasjonale renn.'],
 ['kb-ruk','kb','Ruka','FIN','11-27','11-29','Viaplay',''],
 ['kb-trd','kb','Trondheim','NOR','12-04','12-06','NRK',''],
 ['kb-vdf','kb','Val di Fiemme','ITA','12-11','12-13','TV 2',''],
@@ -490,7 +505,7 @@ const yr=md=>(+md.slice(0,2)>=7?2026:2027);
 const iso=md=>yr(md)+'-'+md;
 const ST={};
 STAGES.forEach(s=>{ST[s[0]]={id:s[0],sp:s[1],v:s[2],cc:s[3],from:iso(s[4]),to:iso(s[5]),ch:s[6],tag:s[7]||'',note:s[8]||'',races:[]}});
-const RS=RACES.map((r,i)=>{const s=ST[r[0]];const o={id:'r'+i,st:s,sp:s.sp,date:iso(r[1]),t:r[2],g:r[3],d:r[4],ch:r[5]||s.ch,radio:!!r[6]};s.races.push(o);return o});
+const RS=RACES.map((r,i)=>{const s=ST[r[0]];const o={id:'r'+i,st:s,sp:s.sp,date:iso(r[1]),t:r[2],g:r[3],d:r[4],ch:r[5]||s.ch,radio:!!r[6],tv:r[7]||''};s.races.push(o);return o});
 RS.sort((a,b)=>(a.date+(a.t||'99')).localeCompare(b.date+(b.t||'99')));
 const STL=Object.values(ST).sort((a,b)=>a.from.localeCompare(b.from)||a.sp.localeCompare(b.sp));
 
@@ -506,7 +521,7 @@ try{const sv=JSON.parse(localStorage.getItem('vp-state')||'null');if(sv){S.fav=s
 const save=()=>{try{localStorage.setItem('vp-state',JSON.stringify({fav:S.fav,sp:S.sp,g:S.g,ch:S.ch,mode:S.mode}))}catch(e){}};
 
 /* ================= HJELPERE ================= */
-const fmtDay=s=>parse(s).toLocaleDateString('nb-NO',{weekday:'long',day:'numeric',month:'long'});
+const fmtDay=s=>{const t=parse(s).toLocaleDateString('nb-NO',{weekday:'long',day:'numeric',month:'long'});return t.charAt(0).toUpperCase()+t.slice(1)};
 const fmtShort=s=>parse(s).toLocaleDateString('nb-NO',{day:'numeric',month:'short'}).replace('.','');
 const range=(a,b)=>a===b?fmtShort(a):(a.slice(5,7)===b.slice(5,7)?parse(a).getDate()+'.–'+fmtShort(b):fmtShort(a)+' – '+fmtShort(b));
 const chCls=c=>c==='NRK'?'NRK':c==='TV 2'?'TV2':c==='Viaplay'?'Viaplay':'unk';
@@ -627,16 +642,16 @@ function bindChips(){
   document.querySelectorAll('.chip[data-k]').forEach(b=>b.onclick=()=>{S[b.dataset.k]=b.dataset.s;if(b.dataset.k==='sp')save();render()});
 }
 
-function raceRow(r,showDate){
+function raceRow(r,showDate,showStage){
   const st=status(r);let tm;
   if(st.k==='live')tm=`<span class="live">● PÅGÅR</span>`;
   else if(st.k==='done')tm=`<b>${r.t||'–'}</b><span>Ferdig</span>`;
-  else tm=`<b>${r.t||'–'}</b><span>${st.k==='soon'?countdown(st.m):(r.t?'':'tid kommer')}</span>`;
-  const when=showDate?`${fmtShort(r.date)} · `:'';
+  else tm=`<b>${r.t||'–'}</b><span>${st.k==='soon'?countdown(st.m):(r.t?'start':'tid kommer')}</span>`;
+  const when=(showDate?`${fmtShort(r.date)} · `:'')+(showStage?`${flag(r.st.cc)} ${r.st.v} · `:'');
   return `<button class="row ${st.k==='done'?'done':''}" data-r="${r.id}">
     <div class="time">${tm}</div>
     <div class="d"><b>${r.d}</b>${gH(r.g)}<span>${when}${SPORT[r.sp].n}</span></div>
-    <div style="text-align:right">${tvB(r.ch)}${r.radio?'<div class="radio">+ NRK radio</div>':''}</div></button>`;
+    <div style="text-align:right">${tvB(r.ch)}<div class="radio">${r.tv?'<b class="tvt">TV fra '+r.tv+'</b>':''}${r.tv&&r.radio?' · ':''}${r.radio?'+ NRK radio':''}</div></div></button>`;
 }
 function stageCard(s,races,dayISO){
   const head=`<button class="ch" data-s="${s.id}">${badge(s.sp)}<div class="t"><b>${flag(s.cc)} ${s.v}${tagH(s.tag)}</b><span>${[SPORT[s.sp].n,cn(s.cc),range(s.from,s.to)].filter(Boolean).join(' · ')}</span></div>${s.ch.includes('/')?'':tvB(s.ch)}</button>`;
@@ -701,23 +716,66 @@ function stageRow(s){
   <button class="star ${on?'on':''}" data-fav="${s.id}" aria-label="Følg">${on?'★':'☆'}</button></div>`;
 }
 
-function tv(){
-  const chs=['NRK','TV 2','Viaplay','SC Play'];
-  let html=`<div class="small" style="padding-top:2px">Hvem sender hva i vinter. Trykk på en kanal for å se de neste sendingene.</div>`;
-  const rights={'NRK':['Skiskyting (deler med TV 2)','Alpint, langrenn, hopp og kombinert på norsk jord','Alpint-VM i Crans-Montana','NM på ski, i hopp, skiskyting og alpint','Radiokanalen NRK Sport: alle renn i langrenn og skiskyting, Hoppuka og VM i hopp og kombinert'],
-    'TV 2':['Skiskyting (deler med NRK)','Verdenscup utenfor Norge (deler med Viaplay)','Ski-VM i Falun, hele mesterskapet'],
-    'Viaplay':['Verdenscup utenfor Norge (deler med TV 2): langrenn, alpint, hopp og kombinert','Alt av skøyter'],
-    'SC Play':['Alle renn i Ski Classics World Championship, med engelsk kommentar','NRK sendte Ski Classics forrige sesong. Ikke bekreftet for 2026/27']};
-  chs.forEach(c=>{
-    const up=RS.filter(r=>r.ch.includes(c)&&r.date>=TODAY).slice(0,6);
-    const nst=STL.filter(s=>s.ch.includes(c)).length;
-    html+=`<div class="card"><div class="ch" style="cursor:default">${tvB(c)}<div class="t"><b>${CH[c].d}</b><span>${nst} arrangementer i sesongen</span></div><a class="tv" href="${CH[c].u}" target="_blank" rel="noopener">Åpne ↗</a></div>
-    <div class="banner" style="display:block">${rights[c].map(x=>'• '+x).join('<br>')}</div>
-    ${up.map(r=>raceRow(r,true)).join('')}
-    <button class="row" data-chf="${c}" style="justify-content:center;color:var(--acc);font-weight:600">Vis alt på ${c} i programmet →</button></div>`;
-  });
-  $('main').innerHTML=html;bindMain();
-  document.querySelectorAll('[data-chf]').forEach(b=>b.onclick=()=>{S.ch=b.dataset.chf;S.v='program';S.mode='uke';save();render()});
+const SER_ORDER=['Verdenscup','World Championship','Tour de Ski','Hoppuka','Grand Classics','VM','EM','NM','Sesongåpning'];
+const SER_DESC={'Verdenscup':'Hele verdenscupsesongen','World Championship':'Ski Classics sin sammenlagtserie','Tour de Ski':'Etapperennet i romjula og over nyttår','Hoppuka':'Fire bakker i Tyskland og Østerrike','Grand Classics':'De fire største langløpene','VM':'Verdensmesterskapet','EM':'Europamesterskapet','NM':'Norgesmesterskapet','Sesongåpning':'Nasjonale renn før verdenscupen'};
+const STAND={lr:'https://www.fis-ski.com/DB/cross-country/cup-standings.html',al:'https://www.fis-ski.com/DB/alpine-skiing/cup-standings.html',hp:'https://www.fis-ski.com/DB/ski-jumping/cup-standings.html',kb:'https://www.fis-ski.com/DB/nordic-combined/cup-standings.html',ss:'https://www.biathlonresults.com',sc:'https://skiclassics.com',sk:'https://www.isu.org'};
+function seriesOf(s){
+  if(s.tag==='VM')return['VM'];if(s.tag==='EM')return['EM'];if(s.tag==='NM')return['NM'];
+  if(s.note.startsWith('Nasjonale'))return['Sesongåpning'];
+  if(s.sp==='sc')return s.tag==='Grand Classics'?['World Championship','Grand Classics']:['World Championship'];
+  const o=['Verdenscup'];if(s.tag==='Tour de Ski')o.push('Tour de Ski');if(s.tag==='Hoppuka')o.push('Hoppuka');return o;
+}
+const gOk=r=>r.g===(S.ig||'K')||r.g==='B'||r.g==='X';
+const gRaces=s=>s.races.filter(gOk);
+const gStage=s=>!s.races.length||gRaces(s).length>0;
+const gSeg=()=>`<div class="seg wide gseg" id="gSeg"><button data-g="K" class="${(S.ig||'K')==='K'?'on':''}">Kvinner</button><button data-g="M" class="${S.ig==='M'?'on':''}">Menn</button></div>`;
+function seriesList(sp){const m={};STL.filter(s=>s.sp===sp&&gStage(s)).forEach(s=>seriesOf(s).forEach(n=>(m[n]=m[n]||[]).push(s)));return SER_ORDER.filter(n=>m[n]).map(n=>({n,st:m[n]}))}
+const uniq=a=>[...new Set(a)];
+function chOf(stages){return uniq(stages.flatMap(s=>s.ch.split(' / '))).filter(c=>c!=='?')}
+function progress(races){const d=races.filter(r=>status(r).k==='done').length;return{d,n:races.length,p:races.length?Math.round(d/races.length*100):0}}
+function pbar(p){return `<div class="pbar"><i style="width:${p.p}%"></i></div><div class="ptxt">${p.n?`${p.d} av ${p.n} øvelser gjennomført`:'Program ikke lagt inn'}</div>`}
+function backBar(label,to){return `<div class="backbar"><button class="back" data-back="${to}">‹ ${label}</button></div>`}
+function idretter(){
+  const m=$('main');
+  if(!S.isp){
+    m.innerHTML=`<div class="hint">Velg en idrett for å se verdenscup, mesterskap og touren samlet.</div><div class="sgrid">`+Object.entries(SPORT).map(([k,v])=>{
+      const st=STL.filter(s=>s.sp===k),ra=RS.filter(r=>r.sp===k);const nx=ra.find(r=>status(r).k!=='done');
+      return `<button class="scard" data-isp="${k}">${badge(k)}<b>${v.n}</b><span>${st.length} arrangementer${ra.length?' · '+ra.length+' øvelser':''}</span><em>${nx?'Neste: '+fmtShort(nx.date)+' · '+nx.st.v:'Ingen kommende renn'}</em></button>`}).join('')+`</div>`;
+  }else if(!S.ser){
+    const sp=S.isp,list=seriesList(sp);
+    m.innerHTML=backBar('Idretter','top')+`<div class="shead">${badge(sp)}<h2>${SPORT[sp].n}</h2></div>`+gSeg()+(list.length?'':'<div class="card"><div class="banner">Ingen konkurranser i denne klassen.</div></div>')+list.map(x=>{
+      const ra=x.st.flatMap(gRaces);const p=progress(ra);const from=x.st.map(s=>s.from).sort()[0],to=x.st.map(s=>s.to).sort().pop();
+      return `<button class="sercard" data-ser="${x.n}"><div class="sertop"><div><b>${x.n}</b><span>${SER_DESC[x.n]||''}</span></div><span class="chev">›</span></div>
+      <div class="sermeta">${range(from,to)} · ${x.st.length} ${x.st.length===1?'arrangement':'arrangementer'}</div>
+      <div class="serch">${chOf(x.st).map(tvB).join('')}</div>${pbar(p)}</button>`}).join('');
+  }else{
+    const sp=S.isp,x=seriesList(sp).find(y=>y.n===S.ser);if(!x){S.ser=null;return idretter()}
+    const tab=S.sertab||'program';const ra=x.st.flatMap(gRaces).sort((a,b)=>(a.date+(a.t||'99')).localeCompare(b.date+(b.t||'99')));
+    let html=backBar(SPORT[sp].n,'sport')+`<div class="shead">${badge(sp)}<div><h2>${x.n}</h2><div class="meta" style="margin:0">${SPORT[sp].n} · ${x.st.length} ${x.st.length===1?'arrangement':'arrangementer'}</div></div></div>
+    ${gSeg()}<div class="seg wide" id="serSeg"><button data-t="program" class="${tab==='program'?'on':''}">Program</button><button data-t="sammenlagt" class="${tab==='sammenlagt'?'on':''}">Sammenlagt</button></div>`;
+    if(tab==='program'){
+      if(!ra.length){html+=`<div class="card">${x.st.map(stageRow).join('')}</div>`}
+      else{
+        const up=ra.filter(r=>status(r).k!=='done'),done=ra.filter(r=>status(r).k==='done');
+        const byDay=list=>{const g={};list.forEach(r=>(g[r.date]=g[r.date]||[]).push(r));return Object.keys(g).sort().map(d=>`<div class="dayhead">${d===TODAY?'I dag · ':''}${fmtDay(d)}</div><div class="card">${g[d].map(r=>raceRow(r,false,true)).join('')}</div>`).join('')};
+        html+=up.length?byDay(up):`<div class="card"><div class="banner">Alle øvelser er gjennomført.</div></div>`;
+        if(done.length)html+=`<details class="donebox"><summary>Gjennomført (${done.length})</summary>${byDay(done.reverse())}</details>`;
+        const noProg=x.st.filter(s=>!s.races.length);if(noProg.length)html+=`<div class="sec">Program kommer</div><div class="card">${noProg.map(stageRow).join('')}</div>`;
+      }
+    }else{
+      const p=progress(ra);
+      html+=`<div class="card"><div class="banner" style="display:block;line-height:1.55"><b style="color:var(--txt)">Sammenlagtstilling</b><br>Stillingen oppdateres etter hvert renn og krever live resultatdata. Inntil SnowTime får en slik kilde, finner du den offisielle stillingen her.
+      <div><a class="btn" href="${STAND[sp]}" target="_blank" rel="noopener">Se offisiell stilling ↗</a></div></div>
+      <div style="padding:0 12px 12px">${pbar(p)}</div></div>`;
+    }
+    m.innerHTML=html;
+    m.querySelectorAll('#serSeg button').forEach(b=>b.onclick=()=>{S.sertab=b.dataset.t;idretter()});
+  }
+  m.querySelectorAll('#gSeg button').forEach(b=>b.onclick=()=>{S.ig=b.dataset.g;idretter()});
+  m.querySelectorAll('[data-isp]').forEach(b=>b.onclick=()=>{S.isp=b.dataset.isp;S.ser=null;window.scrollTo(0,0);idretter()});
+  m.querySelectorAll('[data-ser]').forEach(b=>b.onclick=()=>{S.ser=b.dataset.ser;S.sertab='program';window.scrollTo(0,0);idretter()});
+  m.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>{if(b.dataset.back==='top'){S.isp=null}S.ser=null;window.scrollTo(0,0);idretter()});
+  bindMain();
 }
 
 function folger(){
@@ -760,8 +818,9 @@ function openRace(r){
   const c=r.ch,ch=CH[c];
   openSheet(`<h2>${r.d}</h2><div class="meta">${SPORT[r.sp].n} · ${G[r.g]}${s.tag?' · '+s.tag:''}</div>
   <dl class="kv">
-    <dt>Dato</dt><dd style="text-transform:capitalize">${fmtDay(r.date)}</dd>
-    <dt>Start</dt><dd>${r.t?r.t+' (norsk tid)':'Ikke oppgitt'}${st.k==='soon'&&st.m<1440?' · '+countdown(st.m):''}${st.k==='live'?' · <span style="color:var(--live)">pågår</span>':''}</dd>
+    <dt>Dato</dt><dd>${fmtDay(r.date)}</dd>
+    <dt>Sendestart</dt><dd>${r.tv?r.tv+' (norsk tid)':'<span style="font-weight:500;color:var(--mut)">Ikke publisert ennå</span>'}</dd>
+    <dt>Start øvelse</dt><dd>${r.t?r.t+' (norsk tid)':'Ikke oppgitt'}${st.k==='soon'&&st.m<1440?' · '+countdown(st.m):''}${st.k==='live'?' · <span style="color:var(--live)">pågår</span>':''}</dd>
     <dt>Sted</dt><dd>${flag(s.cc)} ${s.v}${cn(s.cc)?', '+cn(s.cc):''}</dd>
     <dt>Sendes på</dt><dd>${c==='?'?'Ikke oppgitt':(ch?ch.d:c)}${r.radio?'<br><span style="font-weight:500;color:var(--mut)">Radio: NRK Sport</span>':''}</dd>
   </dl>
@@ -778,7 +837,7 @@ function openRace(r){
 function openStage(s){
   const on=S.fav.st.includes(s.id);
   const byDay={};s.races.forEach(r=>(byDay[r.date]=byDay[r.date]||[]).push(r));
-  let body=Object.keys(byDay).sort().map(d=>`<div class="sec" style="text-transform:capitalize">${fmtDay(d)}</div><div class="card">${byDay[d].sort((a,b)=>(a.t||'99').localeCompare(b.t||'99')).map(r=>raceRow(r)).join('')}</div>`).join('');
+  let body=Object.keys(byDay).sort().map(d=>`<div class="sec">${fmtDay(d)}</div><div class="card">${byDay[d].sort((a,b)=>(a.t||'99').localeCompare(b.t||'99')).map(r=>raceRow(r)).join('')}</div>`).join('');
   if(!body)body=`<div class="card" style="margin-top:14px"><div class="banner">Detaljert program er ikke lagt inn ennå.</div></div>`;
   openSheet(`<div style="display:flex;gap:12px;align-items:center">${badge(s.sp)}<div style="flex:1"><h2>${flag(s.cc)} ${s.v}</h2><div class="meta" style="margin:0">${[SPORT[s.sp].n,cn(s.cc),range(s.from,s.to)].filter(Boolean).join(' · ')}</div></div></div>
   <div class="actions" style="margin-top:10px">${tvB(s.ch)}${s.tag?tagH(s.tag):''}</div>
@@ -793,6 +852,8 @@ function info(){
   <div class="card"><div class="banner" style="display:block;line-height:1.55">
   <b style="color:var(--txt)">Hva er med:</b> Verdenscup, VM og NM i langrenn, skiskyting, alpint, hopp og kombinert, pluss skøyter og langløp (Ski Classics World Championship).<br><br>
   <b style="color:var(--txt)">Tider og kanaler:</b> Hentet fra NRKs fulle sendeoversikt for vintersport 2026/27 (oppdatert 4. november). Alle tider er norsk tid og gjelder sendestart.<br><br>
+  <b style="color:var(--txt)">To tider:</b> «Start» er når øvelsen starter. Sendestart vises som «TV fra» når kanalene har publisert den, som regel en til to uker før.<br><br>
+  <b style="color:var(--txt)">Kanaler:</b> NRK og TV 2 deler skiskyting. NRK sender alpint, langrenn, hopp og kombinert i Norge, alpint-VM og NM. TV 2 og Viaplay deler verdenscupen utenfor Norge, og TV 2 har ski-VM i Falun. Viaplay har skøyter. Ski Classics strømmes på SC Play. Radiokanalen NRK Sport sender alle renn i langrenn og skiskyting.<br><br>
   <b style="color:var(--txt)">Forbehold:</b> Programmet kan endres. Sjekk alltid kanalens egen TV-guide.
   </div></div>
   <div class="small">Kilde: <a href="https://www.nrk.no/sport/program-for-vintersport-i-2026_2027_-full-oversikt-over-langrenn_-skiskyting_-alpint_-skoyter_-hopp-1.18033873" target="_blank" rel="noopener">NRK Sport: Program for vintersport i 2026/2027</a>. Supplert med FIS- og IBU-kalendere for sted og øvelse. Langløp: <a href="https://skiclassics.com/events/" target="_blank" rel="noopener">skiclassics.com/events</a>.</div>`);
@@ -828,9 +889,9 @@ function render(){
   document.querySelectorAll('nav.bottom button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.v));
   $('todayBtn').style.visibility=S.v==='program'?'visible':'hidden';
   header();
-  ({program,steder,tv,folger,sok})[S.v]();
+  ({program,steder,idretter,folger,sok})[S.v]();
 }
-document.querySelectorAll('nav.bottom button').forEach(b=>b.onclick=()=>{S.v=b.dataset.v;window.scrollTo(0,0);render()});
+document.querySelectorAll('nav.bottom button').forEach(b=>b.onclick=()=>{if(b.dataset.v==='idretter'&&S.v==='idretter'){S.isp=null;S.ser=null}S.v=b.dataset.v;window.scrollTo(0,0);render()});
 $('todayBtn').onclick=()=>{S.date=clampDate(TODAY);S.mode='dag';render()};
 $('infoBtn').onclick=info;
 $('searchBtn').onclick=()=>{if(S.v!=='sok'){S.prev=S.v;S.v='sok';window.scrollTo(0,0);render()}};
