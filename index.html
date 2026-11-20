@@ -47,6 +47,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.95);backdro
 .chips{display:flex;gap:7px;overflow-x:auto;padding:0 12px 10px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;height:31px;padding:0 13px;border-radius:16px;background:var(--card);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--mut);display:flex;align-items:center;gap:6px}
+.chip.tg{color:var(--txt)}
+.chip.tg.off{color:var(--dim);background:#f5f7f9;text-decoration:line-through}
 .chip.on{background:var(--acc2);color:var(--accd);border-color:#9fd0f8}
 .chip .sw{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;margin-left:-4px}
 .chip .sw svg{width:13px;height:13px;color:#fff}
@@ -529,10 +531,10 @@ const parse=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
 const TODAY=toISO(new Date());
 const FIRST='2026-10-19',LAST='2027-04-04';
 const clampDate=s=>s<FIRST?FIRST:s>LAST?LAST:s;
-let S={v:'program',date:clampDate(TODAY),mode:'dag',sp:'all',g:'all',ch:'all',fav:{st:[],sp:[]},stSp:'all'};
-try{const sv=JSON.parse(localStorage.getItem('vp-state')||'null');if(sv){S.fav=sv.fav||S.fav;S.sp=sv.sp||'all';S.g=sv.g||'all';S.ch=sv.ch||'all';S.mode=sv.mode||'dag'}}catch(e){}
-if(!SPORT[S.sp])S.sp='all';S.fav.sp=S.fav.sp.filter(k=>SPORT[k]);
-const save=()=>{try{localStorage.setItem('vp-state',JSON.stringify({fav:S.fav,sp:S.sp,g:S.g,ch:S.ch,mode:S.mode}))}catch(e){}};
+let S={off:[],v:'program',date:clampDate(TODAY),mode:'dag',sp:'all',g:'all',ch:'all',fav:{st:[],sp:[]},stSp:'all'};
+try{const sv=JSON.parse(localStorage.getItem('vp-state')||'null');if(sv){S.fav=sv.fav||S.fav;S.off=Array.isArray(sv.off)?sv.off:[];S.g=sv.g||'all';S.ch=sv.ch||'all';S.mode=sv.mode||'dag'}}catch(e){}
+S.sp='all';S.off=(S.off||[]).filter(k=>SPORT[k]);S.mode='dag';S.g='all';S.ch='all';S.fav.sp=S.fav.sp.filter(k=>SPORT[k]);
+const save=()=>{try{localStorage.setItem('vp-state',JSON.stringify({fav:S.fav,off:S.off}))}catch(e){}};
 
 /* ================= HJELPERE ================= */
 const fmtDay=s=>{const t=parse(s).toLocaleDateString('nb-NO',{weekday:'long',day:'numeric',month:'long'});return t.charAt(0).toUpperCase()+t.slice(1)};
@@ -556,8 +558,8 @@ function status(r){
   if(diff>-100)return{k:'live'};
   return{k:'done'};
 }
-const inFilter=r=>(S.sp==='all'||r.sp===S.sp)&&(S.g==='all'||r.g===S.g||r.g==='B'||r.g==='X')&&(S.ch==='all'||r.ch.includes(S.ch));
-const stInFilter=s=>(S.sp==='all'||s.sp===S.sp)&&(S.ch==='all'||s.ch.includes(S.ch));
+const inFilter=r=>!S.off.includes(r.sp)&&(S.g==='all'||r.g===S.g||r.g==='B'||r.g==='X')&&(S.ch==='all'||r.ch.includes(S.ch));
+const stInFilter=s=>!S.off.includes(s.sp)&&(S.ch==='all'||s.ch.includes(S.ch));
 const countdown=m=>m<60?`om ${Math.round(m)} min`:m<60*24?`om ${Math.floor(m/60)} t ${Math.round(m%60)} min`:'';
 
 /* ================= SØK ================= */
@@ -634,19 +636,21 @@ function header(){
     d.setDate(d.getDate()+1);
   }
   h.innerHTML=`<div class="days" id="days">${days}</div>
-  <div class="chips">${sportChips(S.sp,'sp')}</div>
-  <div class="sub">
-    <div class="seg" id="modeSeg"><button data-m="dag" class="${S.mode==='dag'?'on':''}">Dag</button><button data-m="uke" class="${S.mode==='uke'?'on':''}">Uke</button></div>
-    <select class="sel" id="gSel"><option value="all">Alle klasser</option><option value="K">Kvinner</option><option value="M">Menn</option></select>
-    <select class="sel" id="chSel"><option value="all">Alle kanaler</option><option>NRK</option><option>TV 2</option><option>Viaplay</option><option>SC Play</option></select>
-  </div>`;
-  $('gSel').value=S.g;$('chSel').value=S.ch;
+  <div class="chips" id="progChips">${progChips()}</div>`;
   $('days').querySelectorAll('.day').forEach(b=>b.onclick=()=>{S.date=b.dataset.d;render()});
-  $('modeSeg').querySelectorAll('button').forEach(b=>b.onclick=()=>{S.mode=b.dataset.m;save();render()});
-  $('gSel').onchange=e=>{S.g=e.target.value;save();render()};
-  $('chSel').onchange=e=>{S.ch=e.target.value;save();render()};
-  bindChips();
+  bindProgChips();
   requestAnimationFrame(()=>{const el=$('days').querySelector('.sel');if(el){const c=$('days');c.style.scrollBehavior='auto';c.scrollLeft=el.offsetLeft-c.clientWidth/2+25;c.style.scrollBehavior=''}});
+}
+function progChips(){
+  const none=!S.off.length;
+  return `<button class="chip ${none?'on':''}" data-all="1">Alle</button>`+
+    Object.entries(SPORT).map(([k,v])=>{const on=!S.off.includes(k);
+      return `<button class="chip tg ${on?'':'off'}" data-tg="${k}" aria-pressed="${on}"><span class="sw" style="background:${on?v.c:'#c3ccd6'}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg></span>${v.n}</button>`}).join('');
+}
+function bindProgChips(){
+  const c=$('progChips');if(!c)return;
+  c.querySelector('[data-all]').onclick=()=>{S.off=[];save();render()};
+  c.querySelectorAll('[data-tg]').forEach(b=>b.onclick=()=>{const k=b.dataset.tg;S.off=S.off.includes(k)?S.off.filter(x=>x!==k):[...S.off,k];save();const sl=c.scrollLeft;render();const n=$('progChips');if(n)n.scrollLeft=sl});
 }
 function sportChips(cur,key){
   return `<button class="chip ${cur==='all'?'on':''}" data-k="${key}" data-s="all">Alle</button>`+
@@ -689,11 +693,7 @@ function program(){
   const m=$('main');
   if(S.mode==='dag'){
     const b=dayBlock(S.date);
-    let top='';
-    if(S.date===TODAY){
-      const nx=RS.filter(r=>inFilter(r)&&start(r)>new Date()&&r.t).slice(0,8);
-      if(nx.length)top=`<div class="sec" style="margin-top:2px">Neste med starttid</div><div class="next">${nx.map(nxCard).join('')}</div>`;
-    }
+    const top='';
     m.innerHTML=top+`<div class="dayhead">${S.date===TODAY?'I dag · ':''}${fmtDay(S.date)}</div>`+(b.n?b.html:emptyDay(S.date));
   }else{
     const d=parse(S.date);const dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);
@@ -709,7 +709,7 @@ function nxCard(r){
 }
 function emptyDay(day,week){
   const nx=RS.find(r=>r.date>day&&inFilter(r));
-  return `<div class="empty"><b>Ingen renn ${week?'denne uka':'denne dagen'}</b>${S.sp!=='all'||S.ch!=='all'||S.g!=='all'?'Prøv å fjerne filtrene.<br>':''}
+  return `<div class="empty"><b>Ingen renn ${week?'denne uka':'denne dagen'}</b>${S.off.length===Object.keys(SPORT).length?'Alle idretter er skjult.<br><button class="btn ghost" id="showAll">Vis alle idretter</button><br>':S.off.length?'Noen idretter er skjult.<br>':''}
   ${nx?`<button class="btn" id="jump" data-d="${nx.date}">Neste renn: ${fmtShort(nx.date)} →</button>`:''}</div>`;
 }
 
@@ -814,6 +814,7 @@ function bindMain(){
   document.querySelectorAll('[data-s]').forEach(b=>{if(!b.classList.contains('chip'))b.onclick=()=>openStage(ST[b.dataset.s])});
   document.querySelectorAll('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(b.dataset.fav);render()});
   const j=$('jump');if(j)j.onclick=()=>{S.date=j.dataset.d;render()};
+  const sa=$('showAll');if(sa)sa.onclick=()=>{S.off=[];save();render()};
 }
 function toggleFav(id){S.fav.st=S.fav.st.includes(id)?S.fav.st.filter(x=>x!==id):[...S.fav.st,id];save()}
 
